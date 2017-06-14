@@ -24,5 +24,5 @@ main :: IO ()
 main = do
   _ <- putStrLn "Welcome to cek-scheme"
   until_ (== ":quit") (readPrompt ">>> ")  (putStrLn . show  . run)
-  where run input =  evaluate <$> tryParseExpr input
+  where run input = (tryParseExpr input) >>= evaluate
           

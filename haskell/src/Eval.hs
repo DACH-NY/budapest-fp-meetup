@@ -73,8 +73,7 @@ step (List [], env, Fn(Lam(param, List body), env', cont)) =
 step (List (x : xs), env, Fn(lam, env', cont)) =
   Right (x, env, Fn(lam, env', Ar(List xs, env, cont)))
   
-step (List (x : xs), env, cont) =
-  Right (x, env, Ar(List xs, env, cont))
+step (List (x : xs), env, cont) =  Right (x, env, Ar(List xs, env, cont))
 
 
 step (Atom atom, env, cont) = case env atom of
@@ -94,8 +93,10 @@ step (Number i, env, Fn(Lam(arg, b), env', cont)) = Right (b, extend env', cont)
 step (Bool i, env, Fn(Lam(arg, b), env', cont)) = Right  (b, extend env', cont)
    where extend e x = if x == arg then Right (Boolean i) else e x
 
-step (e, env, Ar(e', env', cont)) = Right (e', env', Ar(e, env, cont))
---step (e, env, Empty) = Right (e, env, Empty)
+step (Number i, env, _) = Right (Number i, env, Empty)
+step (String i, env, _) = Right (String i, env, Empty)
+step (Bool i, env, _) = Right (Bool i, env, Empty)
+
 step _ = Left "stuck"
 
 isFinal :: EvalState -> Bool
@@ -119,6 +120,7 @@ evaluate e = case eval e of
     interpret _ (Bool b) = Right $ Boolean b
     interpret _ (Number i) = Right $ NumLiteral i
     interpret _ (String s) = Right $ StringLiteral s
+    interpret env (List (Atom "lambda" :  List [Atom param] : body)) = Right $ Closure(Lam(param, List body), env)
     interpret env (Atom x) = env x
     interpret env (List xs) = VList <$> traverse (interpret env) xs
     interpret env (Pair a b) = VPair <$> interpret env a <*> interpret env b
