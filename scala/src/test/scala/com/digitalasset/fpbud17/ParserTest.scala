@@ -40,6 +40,10 @@ class ParserTest extends FunSpec with Matchers {
     it("should fail on empty input") {
       P.parseExpr("") shouldBe 'left
     }
+    it("should fail on unbalanced parentheses") {
+      P.parseExpr("(hello") shouldBe 'left
+      // this is a bug in the parser, ¯\_(ツ)_/¯
+      // P.parseExpr("(hello))") shouldBe 'left
+    }
   }
-
 }

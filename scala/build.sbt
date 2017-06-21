@@ -31,11 +31,9 @@ libraryDependencies ++= Seq(
   compilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
 )
 
-wartremoverErrors ++= Warts.allBut(
-  Wart.ArrayEquals,
-  Wart.PublicInference,
-  Wart.Nothing,
-  Wart.Equals,
-  Wart.Throw,
-  Wart.NonUnitStatements
+wartremoverErrors in (Compile, compile) ++= Warts.allBut(
+   Wart.ArrayEquals,
+   Wart.Nothing
 )
+
+initialCommands in console := """import com.digitalasset.fpbud17._"""
