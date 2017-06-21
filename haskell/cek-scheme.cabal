@@ -20,4 +20,5 @@ executable cek-scheme
   build-depends:       base >= 4.7 && < 5
                      , parsec
                      , mtl
+                     , readline
                        
