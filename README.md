@@ -1,5 +1,15 @@
 # budapest-fp-meetup
 
+## Running the scala example
+
+You can `run` the sample main from sbt:
+
+```
+$ cd scala
+$ sbt
+> run "(((lambda (x) (lambda (y) x)) 3) 4)"
+```
+
 ## References:
 
 Matthias Fleissen et al., Beyond Continuations, 1987. Technical Report, Indiana University
